@@ -39,7 +39,7 @@ public class Controller {
 				}
 			}
 		} catch (Exception e) {
-			vi.printJump("ERROR DEVISTE INGRESAR UN DATO MAL REINICIA EL PROGRAMA:(");
+			vi.printJump("jaja");
 		}
 	}
 
