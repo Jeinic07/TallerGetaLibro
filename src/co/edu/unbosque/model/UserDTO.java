@@ -3,6 +3,7 @@ package co.edu.unbosque.model;
 import co.edu.unbosque.util.MyLinkedList;
 
 public class UserDTO {
+	private int id;
 	private String username;
 	private String password;
 	private MyLinkedList<UserDTO> friendList;
