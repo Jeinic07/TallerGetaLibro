@@ -1,13 +1,15 @@
 package co.edu.unbosque.controller;
+import co.edu.unbosque.persistence.UserDAO;
 import co.edu.unbosque.view.View;
 
 public class Controller {
 
 	
 	private View vi;
+	private UserDAO uDao;
 
 	public Controller() {
-
+		uDao = new UserDAO();
 
 		start();
 	}

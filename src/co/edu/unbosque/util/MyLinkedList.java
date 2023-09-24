@@ -1,4 +1,5 @@
 package co.edu.unbosque.util;
+
 public class MyLinkedList<E> {
 
 	protected Node<E> first;
@@ -24,6 +25,7 @@ public class MyLinkedList<E> {
 		newNode.setNext(this.first);
 		first = newNode;
 	}
+
 	public void insert(E info, Node<E> previous) {
 		if (previous != null) {
 			Node<E> newNode = new Node<E>(info);
@@ -31,7 +33,7 @@ public class MyLinkedList<E> {
 			previous.setNext(newNode);
 		}
 	}
-	
+
 	public void addLast(E info) {
 		Node<E> lastNode = getLastNode();
 
@@ -42,8 +44,54 @@ public class MyLinkedList<E> {
 			;
 		}
 	}
-	
-	
+
+	public void set(int n, E info) {
+		Node<E> currentNode = this.first;
+
+		int infoPos = -1;
+
+		if (!isEmpty()) {
+			infoPos = 0;
+			while (currentNode != null && infoPos < n) {
+				infoPos++;
+				currentNode = currentNode.getNext();
+			}
+			currentNode.setInfo(info);
+		}
+	}
+
+//	public void remove(int n) {
+//		Node<E> currentNode = this.first;
+//		Node<E> previousNode = this.first;
+//		
+//		for(int i = 0; i<n; i++) {
+//			currentNode = currentNode.getNext();
+//		}
+//		for(int i = 0; i<n-1; i++) {
+//			previousNode = previousNode.getNext();
+//		}
+//		while(previousNode) {
+//			
+//		}
+//		
+//		
+//	}
+
+	public void remove(int index){
+        try {
+        	if(index==0) {
+                if (this.first.getNext() != null) {
+                	this.first = this.first.getNext();
+                } else {
+                	this.first = null;
+                } 
+        	}else{
+                    get(index-1).setNext(get(index).getNext());
+            }
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
+		}
+    }
 
 	public E extract() {
 		E data = null;
@@ -53,7 +101,7 @@ public class MyLinkedList<E> {
 		}
 		return data;
 	}
-	
+
 	public E extract(Node<E> previous) {
 		E data = null;
 		if (previous != null && previous.getNext() != null) {
@@ -73,7 +121,6 @@ public class MyLinkedList<E> {
 		}
 		return size;
 	}
-
 
 	public String print() {
 		return this.toString();
@@ -143,7 +190,6 @@ public class MyLinkedList<E> {
 		return counter;
 	}
 
-	
 	public E extractLast() {
 		E info = null;
 		Node<E> current = this.first;
@@ -172,7 +218,7 @@ public class MyLinkedList<E> {
 				counter++;
 			}
 			while (current != null) {
-				sb.append( current.getInfo().toString());
+				sb.append(current.getInfo().toString());
 				if (current.getNext() != null) {
 					sb = sb.append(" -> ");
 				}
@@ -181,14 +227,13 @@ public class MyLinkedList<E> {
 		}
 		return sb.toString();
 	}
-	
 
 	public String toString() {
 		String listText = "";
 		Node<E> current = this.first;
 
 		while (current != null) {
-			listText = listText + current.getInfo().toString();
+			listText = listText + current.getInfo().toString() + "\n";
 			if (current.getNext() != null) {
 				listText = listText + " -> ";
 			}
