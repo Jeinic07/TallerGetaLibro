@@ -12,11 +12,22 @@ public class UserDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserDTO(String username, String password, MyLinkedList<UserDTO> friendList) {
+	public UserDTO(int id,String username, String password, MyLinkedList<UserDTO> friendList) {
 		super();
+		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.friendList = friendList;
+	}
+	
+	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getUsername() {
