@@ -6,18 +6,21 @@ public class UserDTO {
 	private int id;
 	private String username;
 	private String password;
-	private MyLinkedList<UserDTO> friendList;
+	private MyLinkedList<UserDTO> listOfFriends;
 	
 	public UserDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public UserDTO(int id,String username, String password, MyLinkedList<UserDTO> friendList) {
+
+	public UserDTO(String username, String password, MyLinkedList<UserDTO> listOfFriends) {
+
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
-		this.friendList = friendList;
+		this.listOfFriends = listOfFriends;
 	}
 	
 	
@@ -46,11 +49,22 @@ public class UserDTO {
 		this.password = password;
 	}
 
-	public MyLinkedList<UserDTO> getFriendList() {
-		return friendList;
+	public MyLinkedList<UserDTO> getlistOfFriends() {
+		return listOfFriends;
 	}
 
-	public void setFriendList(MyLinkedList<UserDTO> friendList) {
-		this.friendList = friendList;
+	public void setlistOfFriends(MyLinkedList<UserDTO> listOfFriends) {
+		this.listOfFriends = listOfFriends;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("ID: " + id);
+		sb.append("\nUsername: " + username);
+		sb.append("\nPassword: " + password);
+		sb.append("\nList of friends: \n" + listOfFriends.toString());
+		return sb.toString();
+	}
+	
 }
