@@ -7,11 +7,11 @@ public class UserDTO {
 	private String username;
 	private String password;
 	private MyLinkedList<UserDTO> listOfFriends;
-	
+
 	public UserDTO() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public UserDTO(int id, String username, String password, MyLinkedList<UserDTO> listOfFriends) {
 		super();
 		this.id = id;
@@ -51,17 +51,23 @@ public class UserDTO {
 	public void setlistOfFriends(MyLinkedList<UserDTO> listOfFriends) {
 		this.listOfFriends = listOfFriends;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("ID: " + id);
 		sb.append("\nUsername: " + username);
 		sb.append("\nPassword: " + password);
-		if(listOfFriends.size()!=0) {
-			sb.append("\nList of friends: \n" + listOfFriends.toString());
+		if (listOfFriends.size() != 0) {
+			sb.append("\nList of friends:\n");
+			int friendCount = listOfFriends.size();
+			for (int i = 0; i < friendCount; i++) {
+				UserDTO friend = listOfFriends.get(i).getInfo();
+				sb.append(friend.getUsername() + "\n");
+
+			}
 		}
 		return sb.toString();
 	}
-	
+
 }
