@@ -240,6 +240,19 @@ public class MyLinkedList<E> {
 		}
 		return sb.toString();
 	}
+	
+	public int indexOf(E info) {
+        Node<E> currentNode = this.first;
+        int infoPos = -1;
+        if(!isEmpty()){
+            infoPos = 0;
+            while(currentNode!= null && !currentNode.getInfo().equals(info)){
+                infoPos++;
+                currentNode = currentNode.getNext();
+            }
+        }
+        return infoPos;
+    }
 
 	public String toString() {
 		String listText = "";
