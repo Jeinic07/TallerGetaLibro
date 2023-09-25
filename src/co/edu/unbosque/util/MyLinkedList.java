@@ -153,6 +153,19 @@ public class MyLinkedList<E> {
 		}
 		return targetNode;
 	}
+	
+	public E getInfo(E info) {
+		Node<E> targetNode = null;
+		Node<E> currentNode = this.first;
+
+		while (currentNode != null && !currentNode.equals(info)) {
+			currentNode = currentNode.getNext();
+		}
+		if (currentNode != null) {
+			targetNode = currentNode;
+		}
+		return targetNode.getInfo();
+	}
 
 	public Node<E> getLastNode() {
 		Node<E> current = this.first;
