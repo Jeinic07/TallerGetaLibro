@@ -24,15 +24,14 @@ public class UserDAO {
 		this.listOfUsers = listOfUsers;
 	}
 
-	public void createUser(Object o) {
-		listOfUsers.add((UserDTO) o);
+	public void createUser(UserDTO user) {
+		listOfUsers.add(user);
 	}
 
 	public String readUser() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("These are the users on list:");
 		for (int i = 0; i < listOfUsers.size(); i++) {
-			sb.append(listOfUsers.get(i).toString() + "\n");
+			sb.append(listOfUsers.get(i) + "\n");
 		}
 		return sb.toString();
 	}
@@ -55,26 +54,28 @@ public class UserDAO {
 		}
 	}
 
-	public void addFriend(String searchName, String searchFriendName) {
-		UserDTO friend1 = new UserDTO();
+	public void addFriend(String searchName, String searchFriendName, boolean isPossible) {
 		UserDTO friend = new UserDTO();
-		for (int i = 0; i < listOfUsers.size(); i++) {
-			if (listOfUsers.get(i).getInfo().getUsername().equals(searchName)) {
-				friend1 = listOfUsers.get(i).getInfo();
-				System.out.println("User found, what friend do you want to add to this user?");
-				for (int j = 0; j < listOfUsers.size(); j++) {
-					if (listOfUsers.get(j).getInfo().getUsername().equals(searchFriendName)) {
-						friend = listOfUsers.get(j).getInfo();
-						listOfUsers.get(i).getInfo().getlistOfFriends().add(friend);
-						listOfUsers.get(j).getInfo().getlistOfFriends().add(friend1);
-					}
-				}
-				}
+		UserDTO user = new UserDTO();
+		
+		for(int i = 0; i<listOfUsers.size(); i++) {
+			if(listOfUsers.get(i).getInfo().getUsername().equals(searchName)) {
+				user = listOfUsers.get(i).getInfo();
+				break;
 			}
-//		int i = 0;
-//		while(!listOfUsers.get(i).getInfo().getUsername().equals(searchName)) {
-//			
-//		}
-//		
+		}
+		
+		for(int i = 0; i<listOfUsers.size(); i++) {
+			if(listOfUsers.get(i).getInfo().getUsername().equals(searchFriendName)) {
+				friend = listOfUsers.get(i).getInfo();
+				break;
+			}
+		}
+
+		if(isPossible) {
+			user.getlistOfFriends().add(friend);
+			friend.getlistOfFriends().add(user);
+		}
+		
 	}
 }

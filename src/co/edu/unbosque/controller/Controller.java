@@ -30,58 +30,70 @@ public class Controller {
 		MyLinkedList<Edge> edgeList = new MyLinkedList<>();
 		try {
 
-			while (true) {
+		menu: while (true) {
 				vi.printJump("\t Welcome to CARELIBRO \n \t What do you wish to do? \n 1) "
 						+ "Add an user. \n 2). Add friends to an user \n 3). Calculate friendship grade between users. "
 						+ "\n 4). Check disconnected users. \n 5). Check if users have an indirect or direct relationship.");
 				int opcion = vi.readInt();
 				switch (opcion) {
 				case 1:
-					vi.printJump("Add a user: \n Please, type an username.");
+					vi.printJump("Add a user: \n Please, type the id:");
+					int id = vi.readInt();
+					vi.printJump("Type a username:");
 					String username = vi.readLine();
 					vi.printJump("Type a password.");
 					String password = vi.readLine();
-					uDAO.createUser(new UserDTO(username, password, null));
+					UserDTO newUser = new UserDTO(id, username, password, new MyLinkedList<UserDTO>());
+					uDAO.createUser(newUser);
 					vi.printJump("The user has been created.");
-					vertexList.add(new Vertex<UserDTO>(new UserDTO(username, password, null)));
+					vertexList.add(new Vertex<UserDTO>(newUser));
 
 					break;
 				case 2:
-					vi.printJump("Add friends to an user: \n Please, type the username you wish to add a friend to.");
-                    String firstName = vi.readLine();
-                    vi.printJump("Type the username which will be " + firstName + "'s friend");
-                    String secondName = vi.readLine();
-                    uDAO.addFriend(firstName, secondName);
+					boolean isPossible = false;
+					if(uDAO.getListOfUsers().size()<=1) {
+						vi.printJump("You need at least two users in the list to start connecting friends. \n");
+						vi.printJump(uDAO.readUser());
+						isPossible = false;
+						continue menu;
+					} else {
+						vi.printJump("Add friends to an user: \n Please, type the username you wish to add a friend to.");
+	                    String firstName = vi.readLine();
+	                    vi.printJump("Type the username which will be " + firstName + "'s friend");
+	                    String secondName = vi.readLine();
+	                    
+	                    isPossible = true;
+	                    
+	                    uDAO.addFriend(firstName, secondName, isPossible);
 
-                    Vertex<UserDTO> sourceNode = null;
-                    for (int j = 0; j < vertexList.size(); j++) {
-                        if (vertexList.get(j).getInfo().getInfo().getUsername().equalsIgnoreCase(firstName)) {
-                            sourceNode = vertexList.get(j).getInfo();
-                            break;
-                        }
-                    }
-                    Vertex<UserDTO> destinationNode = null;
-                    for (int j = 0; j < vertexList.size(); j++) {
-                        if (vertexList.get(j).getInfo().getInfo().getUsername().equalsIgnoreCase(secondName)) {
-                            destinationNode = vertexList.get(j).getInfo();
-                            break;
-                        }
-                    }
-                    Edge edge = new Edge(sourceNode, destinationNode, 1);
-                    edgeList.add(edge);
-                    sourceNode.addEdge(edge);
+	                    Vertex<UserDTO> sourceNode = null;
+	                    for (int j = 0; j < vertexList.size(); j++) {
+	                        if (vertexList.get(j).getInfo().getInfo().getUsername().equalsIgnoreCase(firstName)) {
+	                            sourceNode = vertexList.get(j).getInfo();
+	                            break;
+	                        }
+	                    }
+	                    Vertex<UserDTO> destinationNode = null;
+	                    for (int j = 0; j < vertexList.size(); j++) {
+	                        if (vertexList.get(j).getInfo().getInfo().getUsername().equalsIgnoreCase(secondName)) {
+	                            destinationNode = vertexList.get(j).getInfo();
+	                            break;
+	                        }
+	                    }
+	                    Edge edge = new Edge(sourceNode, destinationNode, 1);
+	                    edgeList.add(edge);
+	                    sourceNode.addEdge(edge);
 
-                     Graph graph = new Graph();
-                        for (int i = 0; i < vertexList.size(); i++) {
-                            Node<Vertex<UserDTO>> vertexToAdd = vertexList.get(i);
-                            Vertex<UserDTO> vertexToAddToGraph = vertexToAdd.getInfo();
-                            graph.addVertex(vertexToAddToGraph);
-                        }
+	                     Graph graph = new Graph();
+	                        for (int i = 0; i < vertexList.size(); i++) {
+	                            Node<Vertex<UserDTO>> vertexToAdd = vertexList.get(i);
+	                            Vertex<UserDTO> vertexToAddToGraph = vertexToAdd.getInfo();
+	                            graph.addVertex(vertexToAddToGraph);
+	                        }
 
-                        System.out.println(graph.toString());
-
-					
-					break;
+	                        System.out.println(graph.toString());
+	                        break;
+					}
 				case 3:
 
 					break;

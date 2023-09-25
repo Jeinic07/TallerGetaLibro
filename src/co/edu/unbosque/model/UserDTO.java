@@ -11,18 +11,14 @@ public class UserDTO {
 	public UserDTO() {
 		// TODO Auto-generated constructor stub
 	}
-
-
-	public UserDTO(String username, String password, MyLinkedList<UserDTO> listOfFriends) {
-
+	
+	public UserDTO(int id, String username, String password, MyLinkedList<UserDTO> listOfFriends) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.listOfFriends = listOfFriends;
 	}
-	
-	
 
 	public int getId() {
 		return id;
@@ -62,7 +58,9 @@ public class UserDTO {
 		sb.append("ID: " + id);
 		sb.append("\nUsername: " + username);
 		sb.append("\nPassword: " + password);
-		sb.append("\nList of friends: \n" + listOfFriends.toString());
+		if(listOfFriends.size()!=0) {
+			sb.append("\nList of friends: \n" + listOfFriends.toString());
+		}
 		return sb.toString();
 	}
 	
