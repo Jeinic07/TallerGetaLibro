@@ -53,5 +53,19 @@ public class UserDTO {
 	}
 
 	@Override
-	public String toString() {
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID: " + id);
+        sb.append("\nUsername: " + username);
+        sb.append("\nPassword: " + password);
+        if (listOfFriends.size() != 0) {
+            sb.append("\nList of friends:\n");
+            for (int i = 0; i < listOfFriends.size(); i++) {
+                UserDTO friend = listOfFriends.get(i).getInfo();
+                sb.append(friend.getUsername() + "\n");
+
+            }
+        }
+        return sb.toString();
+    }
 }

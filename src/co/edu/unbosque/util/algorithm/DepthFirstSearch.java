@@ -6,10 +6,13 @@ public class DepthFirstSearch extends AbstractSearch {
 
 	private StackImpl<Vertex<?>> stackOfNodes = new StackImpl<Vertex<?>>();
 	private MyLinkedList<Vertex<?>> visitedNodes = new MyLinkedList<Vertex<?>>();
+	private int depth;
 
 	public DepthFirstSearch(Vertex<?> sourceVertex, Vertex<?> destinationVertex) {
 		super(sourceVertex, destinationVertex);
+		depth = 0;
 	}
+
 
 	@Override
 	public boolean runSearch() {
@@ -28,7 +31,7 @@ public class DepthFirstSearch extends AbstractSearch {
 			Vertex<?> current = stackOfNodes.pop();
 			if (current.equals(destinationVertex)) {
 				System.out.println(destinationVertex.getInfo());
-				System.out.println("nodo buscado encontrado\n");
+//				depth++;
 				return true;
 			} else {
 				System.out.print(current.getInfo() + " -> ");
@@ -36,11 +39,23 @@ public class DepthFirstSearch extends AbstractSearch {
 				MyLinkedList<Edge> adyacents = current.getAdyacentEdges();
 				while (!adyacents.isEmpty()) {
 					stackOfNodes.push(adyacents.extract().getDestination());
+					depth++;
 				}
+//				while(!visitedNodes.isEmpty()) {
+//					depth++;
+//				}
 			}
 		}
 		return false;
 
+	}
+	
+	public int getDepth() {
+		return depth;
+	}
+
+	public void setDepth(int depth) {
+		this.depth = depth;
 	}
 
 	public StackImpl<Vertex<?>> getStackOfNodes() {
