@@ -44,6 +44,17 @@ public class MyLinkedList<E> {
 			;
 		}
 	}
+	
+	public boolean contains(E info) {
+		Node<E> currentNode = this.first;
+		while(currentNode!=null) {
+			currentNode = currentNode.getNext();
+			if(currentNode.getInfo().equals(info)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public void set(int n, E info) {
 		Node<E> currentNode = this.first;
