@@ -1,14 +1,12 @@
-public class UserDAO {
+package co.edu.unbosque.persistence;
 
-	private MyLinkedList<UserDTO> listUsers;
-	private MyLinkedList<UserDTO> listFriends;
-	 
+import co.edu.unbosque.model.UserDTO;
+import co.edu.unbosque.util.MyLinkedList;
+
 public class UserDAO {
-			
-		
 
 	private MyLinkedList<UserDTO> listOfUsers;
-	
+
 	public UserDAO() {
 		listOfUsers = new MyLinkedList<UserDTO>();
 	}
@@ -17,7 +15,7 @@ public class UserDAO {
 		super();
 		this.listOfUsers = listOfUsers;
 	}
-	
+
 	public MyLinkedList<UserDTO> getListOfUsers() {
 		return listOfUsers;
 	}
@@ -29,16 +27,16 @@ public class UserDAO {
 	public void createUser(Object o) {
 		listOfUsers.add((UserDTO) o);
 	}
-	
+
 	public String readUser() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("These are the users on list:");
-		for(int i = 0; i<listOfUsers.size(); i++) {
+		for (int i = 0; i < listOfUsers.size(); i++) {
 			sb.append(listOfUsers.get(i).toString() + "\n");
 		}
 		return sb.toString();
 	}
-	
+
 	public boolean updateUser(int i, Object o) {
 		try {
 			listOfUsers.set(i, (UserDTO) o);
@@ -47,7 +45,7 @@ public class UserDAO {
 			return false;
 		}
 	}
-	
+
 	public int deleteUser(int i) {
 		try {
 			listOfUsers.remove(i);
@@ -56,4 +54,20 @@ public class UserDAO {
 			return -1;
 		}
 	}
-	
+
+	public void addFriend(String searchName, String searchFriendName) {
+		for (int i = 0; i < listOfUsers.size(); i++) {
+			if (listOfUsers.get(i).getInfo().getUsername().equals(searchName)) {
+				UserDTO friend1 = listOfUsers.get(i).getInfo();
+				System.out.println("User found, what friend do you want to add to this user?");
+				for (int j = 0; j < listOfUsers.size(); j++) {
+					if (listOfUsers.get(j).getInfo().getUsername().equals(searchFriendName)) {
+						UserDTO friend = listOfUsers.get(j).getInfo();
+						listOfUsers.get(i).getInfo().getlistOfFriends().add(friend);;
+						listOfUsers.get(j).getInfo().getlistOfFriends().add(friend1);;
+					}
+				}
+			}
+		}
+	}
+}

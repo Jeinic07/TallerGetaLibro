@@ -12,7 +12,6 @@ public class UserDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserDTO(int id,String username, String password, MyLinkedList<UserDTO> friendList) {
 
 	public UserDTO(String username, String password, MyLinkedList<UserDTO> listOfFriends) {
 
