@@ -8,6 +8,7 @@ import co.edu.unbosque.model.UserDTO;
 import co.edu.unbosque.util.Edge;
 import co.edu.unbosque.util.Graph;
 import co.edu.unbosque.util.MyLinkedList;
+import co.edu.unbosque.util.Node;
 import co.edu.unbosque.util.Vertex;
 import co.edu.unbosque.view.View;
 
@@ -24,7 +25,6 @@ public class Controller {
 	}
 
 	private void start() {
-		vi.printJump("a");
 		Graph g1 = new Graph();
 		MyLinkedList<Vertex<UserDTO>> vertexList = new MyLinkedList<>();
 		MyLinkedList<Edge> edgeList = new MyLinkedList<>();
@@ -48,27 +48,39 @@ public class Controller {
 					break;
 				case 2:
 					vi.printJump("Add friends to an user: \n Please, type the username you wish to add a friend to.");
-					String firstName = vi.readLine();
-					vi.printJump("Type the username which will be " + firstName + "'s friend");
-					String secondName = vi.readLine();
+                    String firstName = vi.readLine();
+                    vi.printJump("Type the username which will be " + firstName + "'s friend");
+                    String secondName = vi.readLine();
+                    uDAO.addFriend(firstName, secondName);
 
-					Vertex<UserDTO> sourceNode = null;
-					for (int j = 0; j < vertexList.size(); j++) {
-						if (vertexList.get(j).getInfo().getInfo().getUsername().equalsIgnoreCase(firstName)) {
-							sourceNode = vertexList.get(j).getInfo();
-							break;
-						}
-					}
-					Vertex<UserDTO> destinationNode = null;
-					for (int j = 0; j < vertexList.size(); j++) {
-						if (vertexList.get(j).getInfo().getInfo().getUsername().equalsIgnoreCase(secondName)) {
-							destinationNode = vertexList.get(j).getInfo();
-							break;
-						}
-					}
-					Edge edge = new Edge(sourceNode, destinationNode, 1);
-					edgeList.add(edge);
-					sourceNode.addEdge(edge);
+                    Vertex<UserDTO> sourceNode = null;
+                    for (int j = 0; j < vertexList.size(); j++) {
+                        if (vertexList.get(j).getInfo().getInfo().getUsername().equalsIgnoreCase(firstName)) {
+                            sourceNode = vertexList.get(j).getInfo();
+                            break;
+                        }
+                    }
+                    Vertex<UserDTO> destinationNode = null;
+                    for (int j = 0; j < vertexList.size(); j++) {
+                        if (vertexList.get(j).getInfo().getInfo().getUsername().equalsIgnoreCase(secondName)) {
+                            destinationNode = vertexList.get(j).getInfo();
+                            break;
+                        }
+                    }
+                    Edge edge = new Edge(sourceNode, destinationNode, 1);
+                    edgeList.add(edge);
+                    sourceNode.addEdge(edge);
+
+                     Graph graph = new Graph();
+                        for (int i = 0; i < vertexList.size(); i++) {
+                            Node<Vertex<UserDTO>> vertexToAdd = vertexList.get(i);
+                            Vertex<UserDTO> vertexToAddToGraph = vertexToAdd.getInfo();
+                            graph.addVertex(vertexToAddToGraph);
+                        }
+
+                        System.out.println(graph.toString());
+
+					
 					break;
 				case 3:
 

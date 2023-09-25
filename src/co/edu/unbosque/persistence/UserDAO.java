@@ -56,18 +56,25 @@ public class UserDAO {
 	}
 
 	public void addFriend(String searchName, String searchFriendName) {
+		UserDTO friend1 = new UserDTO();
+		UserDTO friend = new UserDTO();
 		for (int i = 0; i < listOfUsers.size(); i++) {
 			if (listOfUsers.get(i).getInfo().getUsername().equals(searchName)) {
-				UserDTO friend1 = listOfUsers.get(i).getInfo();
+				friend1 = listOfUsers.get(i).getInfo();
 				System.out.println("User found, what friend do you want to add to this user?");
 				for (int j = 0; j < listOfUsers.size(); j++) {
 					if (listOfUsers.get(j).getInfo().getUsername().equals(searchFriendName)) {
-						UserDTO friend = listOfUsers.get(j).getInfo();
-						listOfUsers.get(i).getInfo().getlistOfFriends().add(friend);;
-						listOfUsers.get(j).getInfo().getlistOfFriends().add(friend1);;
+						friend = listOfUsers.get(j).getInfo();
+						listOfUsers.get(i).getInfo().getlistOfFriends().add(friend);
+						listOfUsers.get(j).getInfo().getlistOfFriends().add(friend1);
 					}
 				}
+				}
 			}
-		}
+//		int i = 0;
+//		while(!listOfUsers.get(i).getInfo().getUsername().equals(searchName)) {
+//			
+//		}
+//		
 	}
 }
