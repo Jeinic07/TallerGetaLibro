@@ -31,7 +31,7 @@ public class DepthFirstSearch extends AbstractSearch {
 			Vertex<?> current = stackOfNodes.pop();
 			if (current.equals(destinationVertex)) {
 				System.out.println(destinationVertex.getInfo());
-//				depth++;
+				depth++;
 				return true;
 			} else {
 				System.out.print(current.getInfo() + " -> ");
@@ -39,11 +39,9 @@ public class DepthFirstSearch extends AbstractSearch {
 				MyLinkedList<Edge> adyacents = current.getAdyacentEdges();
 				while (!adyacents.isEmpty()) {
 					stackOfNodes.push(adyacents.extract().getDestination());
-					depth++;
 				}
-//				while(!visitedNodes.isEmpty()) {
-//					depth++;
-//				}
+				depth++;
+				return true;
 			}
 		}
 		return false;

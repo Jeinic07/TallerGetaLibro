@@ -38,7 +38,7 @@ public class Controller {
 						+ "\n 4). Check disconnected users. \n 5). Check if users have an indirect or direct relationship.");
 				int opcion = vi.readInt();
 				switch (opcion) {
-				case 1:
+				case 1: {
 					vi.printJump("Add a user: \n Please, type the id:");
 					int id = vi.readInt();
 					vi.printJump("Type a username:");
@@ -51,7 +51,8 @@ public class Controller {
 					vertexList.add(new Vertex<UserDTO>(newUser));
 
 					break;
-				case 2:
+				}
+				case 2: {
 					boolean isPossible = false;
 					if (uDAO.getListOfUsers().size() <= 1) {
 						vi.printJump("You need at least two users in the list to start connecting friends. \n");
@@ -83,13 +84,16 @@ public class Controller {
 								break;
 							}
 						}
-						Edge edge = new Edge(sourceNode, destinationNode, 1);
-						edgeList.add(edge);
-						sourceNode.addEdge(edge);
-						
+						Edge edge1 = new Edge(sourceNode, destinationNode, 1);
+						edgeList.add(edge1);
+						sourceNode.addEdge(edge1);
+
+						Edge edge2 = new Edge(destinationNode, sourceNode, 1);
+						edgeList.add(edge2);
+						sourceNode.addEdge(edge2);
+
 						int indexUser = vertexList.indexOf(sourceNode);
 						int indexFriend = vertexList.indexOf(destinationNode);
-						
 
 						Graph graph = new Graph();
 						for (int i = 0; i < vertexList.size(); i++) {
@@ -101,7 +105,8 @@ public class Controller {
 						System.out.println(uDAO.readUser());
 						break;
 					}
-				case 3:
+				}
+				case 3: {
 
 					vi.printJump("Type first username:");
 					String user = vi.readLine();
@@ -132,6 +137,60 @@ public class Controller {
 					}
 
 					break;
+				}
+				case 4: {
+					String notConnected = "";
+					for(int i = 0; i<vertexList.size(); i++) {
+						if(vertexList.get(i).getInfo().getAdyacentEdges().isEmpty()) {
+							notConnected += vertexList.get(i).getInfo().getInfo().getUsername() + ", ";
+						}
+					}
+					if(notConnected.equals("") && !vertexList.isEmpty()) {
+						vi.printJump("Every user has a connection.");
+					} else if(vertexList.isEmpty()) {
+						vi.printJump("There are no users in list.");
+					}	else {
+						vi.printJump("The following users don't have any connection: \n" + notConnected);
+					}
+					break;
+				}
+				case 5: {
+					vi.printJump("Type first username:");
+					String user = vi.readLine();
+					vi.printJump("Type the second user:");
+					String friend = vi.readLine();
+
+					Vertex<UserDTO> sourceNode = null;
+					for (int j = 0; j < vertexList.size(); j++) {
+						if (vertexList.get(j).getInfo().getInfo().getUsername().equalsIgnoreCase(user)) {
+							sourceNode = vertexList.get(j).getInfo();
+							break;
+						}
+					}
+					Vertex<UserDTO> destinationNode = null;
+					for (int j = 0; j < vertexList.size(); j++) {
+						if (vertexList.get(j).getInfo().getInfo().getUsername().equalsIgnoreCase(friend)) {
+							destinationNode = vertexList.get(j).getInfo();
+							break;
+						}
+					}
+
+					DepthFirstSearch dfs = new DepthFirstSearch(sourceNode, destinationNode);
+					if (dfs.runSearch()) {
+						if(dfs.getDepth()==2) {
+							vi.printJump("The connection between users is direct.");
+						} else if (dfs.getDepth()>2){
+							vi.printJump("The connection between users is indirect.");
+						} else if(dfs.getDepth()==1) {
+							vi.printJump("There is no relationship between users.");
+						}
+					} else {
+						vi.printJump("There is no connection between " + sourceNode.getInfo().getUsername() + " and "
+								+ destinationNode.getInfo().getUsername());
+					}
+					break;
+				}
+				
 				default:
 					vi.printJump("Gracias por utilizar este programa");
 					System.exit(0);
